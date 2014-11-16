@@ -85,10 +85,10 @@ module.exports = function (opts) {
       option;
   };
 
-  Component.prototype.input = function (event) {
+  Component.prototype.input = function (e) {
     this.open();
     this.deselect();
-    this.emit('query', event.target.value);
+    this.emit('query', e.target.value);
   };
 
   Component.prototype.reset = function () {
@@ -108,6 +108,18 @@ module.exports = function (opts) {
   Component.prototype.deselect = function (id) {
     this.model.at('selectedIds').del(id || '');
     this.emit('deselect', id);
+  };
+
+  Component.prototype.pressOption = function (e) {
+    // necessary to prevent the default event
+    // of "onblur" from preventing "onclick"
+    e.preventDefault();
+  };
+
+  Component.prototype.clickOption = function (e, id) {
+    e.stopPropagation();
+    this.select(id);
+    this.blur();
   };
 
   return Component;
