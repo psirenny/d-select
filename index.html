@@ -8,7 +8,7 @@
         </li>
         {{/}}
         <li class="{{ns}}-textbox-item {{ns}}-textbox-item-input">
-          <input class="{{ns}}-textbox-input" on-input="input($event)" on-focus="focus()" on-blur="blur()" placeholder="{{@placeholder}}" readonly="{{!editable}}" type="text" value="{{text}}">
+          <input class="{{ns}}-textbox-input" as="input" on-input="oninput($event)" on-focus="onfocus()" on-blur="onblur()" placeholder="{{@placeholder}}" readonly="{{!editable}}" type="text" value="{{text}}">
         </li>
       </ul>
     </label>
@@ -18,14 +18,14 @@
       {{else}}
       <ul class="{{ns}}-dropdown-items">
         {{if @placeholder && !editable}}
-        <li class="{{ns}}-dropdown-item" on-click="clickOption($event)" on-mousedown="pressOption($event)">
+        <li class="{{ns}}-dropdown-item" on-click="onclick($event)" on-mousedown="onpress($event)">
           <div class="{{ns}}-dropdown-placeholder">
             {{@placeholder}}
           </div>
         </li>
         {{/}}
         {{each options as #option, #i}}
-        <li class="{{ns}}-dropdown-item {{if cursor === #i}}hover{{/}}" on-click="clickOption($event, optionId(#option))" on-mousedown="pressOption($event)">
+        <li class="{{ns}}-dropdown-item {{if cursor === #i}}hover{{/}}" on-click="onclick($event, optionId(#option))" on-mousedown="onpress($event)">
           <view name="{{viewOption}}" option="{{#option}}" index="{{#i}}"></view>
         </li>
         {{/}}

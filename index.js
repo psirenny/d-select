@@ -50,16 +50,42 @@ module.exports = function (opts) {
     });
   };
 
-  Component.prototype.focus = function () {
+  Component.prototype.onfocus = function () {
     this.model.set('focus', true);
     this.emit('focus');
     this.open();
   };
 
-  Component.prototype.blur = function () {
+  Component.prototype.onblur = function () {
     this.model.del('focus');
     this.emit('blur');
     this.close();
+  };
+
+  Component.prototype.oninput = function (e) {
+    this.open();
+    this.deselect();
+    this.emit('query', e.target.value);
+  };
+
+  Component.prototype.onpress = function (e) {
+    // necessary to prevent the default event
+    // of "onblur" from preventing "onclick"
+    e.preventDefault();
+  };
+
+  Component.prototype.onclick = function (e, id) {
+    e.stopPropagation();
+    this.select(id);
+    this.blur();
+  };
+
+  Component.prototype.focus = function () {
+    this.input.focus();
+  };
+
+  Component.prototype.blur = function () {
+    this.input.blur();
   };
 
   Component.prototype.open = function () {
@@ -77,18 +103,6 @@ module.exports = function (opts) {
   Component.prototype.clear = function () {
     this.model.del('text');
     this.emit('query', '');
-  };
-
-  Component.prototype.optionId = function (option) {
-    return (typeof option === 'object') ?
-      option[opts.optionId] :
-      option;
-  };
-
-  Component.prototype.input = function (e) {
-    this.open();
-    this.deselect();
-    this.emit('query', e.target.value);
   };
 
   Component.prototype.reset = function () {
@@ -110,16 +124,10 @@ module.exports = function (opts) {
     this.emit('deselect', id);
   };
 
-  Component.prototype.pressOption = function (e) {
-    // necessary to prevent the default event
-    // of "onblur" from preventing "onclick"
-    e.preventDefault();
-  };
-
-  Component.prototype.clickOption = function (e, id) {
-    e.stopPropagation();
-    this.select(id);
-    this.blur();
+  Component.prototype.optionId = function (option) {
+    return (typeof option === 'object') ?
+      option[opts.optionId] :
+      option;
   };
 
   return Component;
