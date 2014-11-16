@@ -1,0 +1,48 @@
+<index: arrays="option/options" element="d-select">
+  <div class="{{ns}} {{ns}}-{{if open}}open{{else}}closed{{/}} {{ns}}-{{unless editable}}un{{/}}editable {{ns}}-{{if focus}}focus{{else}}blur{{/}} {{ns}}-{{if multiple}}multiple{{else}}single{{/}} {{ns}}-{{unless selected.length}}un{{/}}selected {{class}}">
+    <label class="{{ns}}-textbox">
+      <ul class="{{ns}}-textbox-items">
+        {{each selected as #selection, #i}}
+        <li class="{{ns}}-textbox-item {{ns}}-textbox-item-selection">
+          <view name="{{viewSelection}}" selection="{{#selection}}" index="{{#i}}"></view>
+        </li>
+        {{/}}
+        <li class="{{ns}}-textbox-item {{ns}}-textbox-item-input">
+          <input class="{{ns}}-textbox-input" on-input="input($event)" on-focus="focus()" on-blur="blur()" placeholder="{{placeholder}}" readonly="{{!editable}}" type="text" value="{{text}}">
+        </li>
+      </ul>
+    </label>
+    <div class="{{ns}}-dropdown">
+      {{if loading}}
+      <view name="{{viewLoading}}"></view>
+      {{else}}
+      <ul class="{{ns}}-dropdown-items">
+        {{if placeholder && !editable}}
+        <li class="{{ns}}-dropdown-item" on-mousedown="deselect()">
+          <div class="{{ns}}-dropdown-placeholder">
+            {{placeholder}}
+          </div>
+        </li>
+        {{/}}
+        {{each options as #option, #i}}
+        <li class="{{ns}}-dropdown-item {{if cursor === #i}}hover{{/}}" on-mousedown="select(optionId(#option))">
+          <view name="{{viewOption}}" option="{{#option}}" index="{{#i}}"></view>
+        </li>
+        {{/}}
+      </ul>
+      {{/}}
+    </div>
+  </div>
+
+<loading:>
+  <!-- empty -->
+
+<selection:>
+  <div class="{{ns}}-textbox-selection">
+    {{@selection.text}}
+  </div>
+
+<option:>
+  <div class="{{ns}}-dropdown-value">
+    {{@option.text}}
+  </div>
