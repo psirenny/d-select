@@ -8,7 +8,7 @@
         </li>
         {{/}}
         <li class="{{ns}}-textbox-item {{ns}}-textbox-item-input">
-          <input class="{{ns}}-textbox-input" as="input" on-input="oninput($event)" on-focus="onfocus()" on-blur="onblur()" placeholder="{{@placeholder}}" readonly="{{!editable}}" type="text" value="{{text}}">
+          <input class="{{ns}}-textbox-input" as="input" id="{{inputId}}" on-input="oninput($event)" on-focus="onfocus()" on-blur="onblur()" placeholder="{{@placeholder}}" readonly="{{!editable}}" type="text" value="{{text}}">
         </li>
       </ul>
     </label>
